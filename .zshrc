@@ -1,10 +1,8 @@
-
 autoload -U history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^[[A" history-beginning-search-backward-end
 bindkey "^[[B" history-beginning-search-forward-end
-
 
 alias t=tmux
 alias g=git
@@ -22,45 +20,45 @@ alias gbr=git branch
 alias vim=nvim
 alias python=python3
 
+# Platform detection
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS-specific aliases and configurations
+  alias androidstudio="open -a /Applications/Android\ Studio.app"
 
-alias androidstudio="open -a /Applications/Android\ Studio.app"
+  # The next line updates PATH for the Google Cloud SDK.
+  if [ -f '/Users/tmhdgsn/google-cloud-sdk/path.zsh.inc' ]; then
+    . '/Users/tmhdgsn/google-cloud-sdk/path.zsh.inc'
+  fi
 
+  # The next line enables shell command completion for gcloud.
+  if [ -f '/Users/tmhdgsn/google-cloud-sdk/completion.zsh.inc' ]; then
+    . '/Users/tmhdgsn/google-cloud-sdk/completion.zsh.inc'
+  fi
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/tmhdgsn/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/tmhdgsn/google-cloud-sdk/path.zsh.inc'; fi
+  PATH=$PATH:/Users/tmhdgsn/bin/flutter/bin
+  PATH="$PATH":"$HOME/.pub-cache/bin"
+  
+  # Homebrew and OpenJDK
+  export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+  export CPPFLAGS="-I/opt/homebrew/opt/openjdk@17/include"
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/tmhdgsn/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/tmhdgsn/google-cloud-sdk/completion.zsh.inc'; fi
+  # For the system Java wrappers to find this JDK, symlink it with
+  # sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
 
-PATH=$PATH:/Users/tmhdgsn/bin/flutter/bin
-PATH="$PATH":"$HOME/.pub-cache/bin"
-#export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+  export CHROMEDRIVER=/Users/tmhdgsn/bin/chromedriver
 
+  # virtualenv
+  VIRTUALENVWRAPPER_PYTHON=$(which python3)
+  export WORKON_HOME=$HOME/.virtualenvs
+  source /opt/homebrew/bin/virtualenvwrapper.sh
 
-# For compilers to find openjdk you may need to set:
-export CPPFLAGS="-I/opt/homebrew/opt/openjdk@17/include"
+  # Opam
+  [[ ! -r '/Users/tmhdgsn/.opam/opam-init/init.zsh' ]] || source '/Users/tmhdgsn/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
 
+  # golang
+  export GOPATH=/Users/tmhdgsn/go
+  PATH=$PATH:$GOPATH/bin
+else
+  # linux config
+fi
 
-# For the system Java wrappers to find this JDK, symlink it with
-# sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
-
-VIRTUALENVWRAPPER_PYTHON=$(which python3)
-export WORKON_HOME=$HOME/.virtualenvs
-source /opt/homebrew/bin/virtualenvwrapper.sh
-
-export CHROMEDRIVER=/Users/tmhdgsn/bin/chromedriver
-
-
-# BEGIN opam configuration
-# This is useful if you're using opam as it adds:
-#   - the correct directories to the PATH
-#   - auto-completion for the opam binary
-# This section can be safely removed at any time if needed.
-[[ ! -r '/Users/tmhdgsn/.opam/opam-init/init.zsh' ]] || source '/Users/tmhdgsn/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
-# END opam configuration
-
-
-
-export GOPATH=/Users/tmhdgsn/go
-PATH=$PATH:$GOPATH/bin
