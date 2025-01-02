@@ -66,4 +66,28 @@ if command -v nvim >/dev/null 2>&1; then
     done
 fi
 
+# If skhd is installed, configure it
+SKHD_CONFIG_DIR="$HOME/.config/skhd"
+if command -v skhd >/dev/null 2>&1; then
+    echo "skhd detected. Setting up."
+    mkdir -p "$SKHD_CONFIG_DIR"
+
+    for CONFIG_FILE in "$DOTFILES_DIR/skhd"/*; do
+        CONFIG_BASENAME=$(basename "$CONFIG_FILE")
+        TARGET="$SKHD_CONFIG_DIR/$CONFIG_BASENAME"
+
+        if [[ -e "$TARGET" ]]; then
+            read -p "Overwrite $TARGET? (y/n) " CONFIRM
+            if [[ "$CONFIRM" != "y" ]]; then
+                echo "Skipping $TARGET"
+                continue
+            fi
+        fi
+
+        ln -sf "$CONFIG_FILE" "$TARGET"
+        echo "Linked $TARGET -> $CONFIG_FILE"
+    done
+fi
+
+
 echo "Dotfiles Setup!"

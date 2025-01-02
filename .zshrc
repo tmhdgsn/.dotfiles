@@ -4,6 +4,16 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^[[A" history-beginning-search-backward-end
 bindkey "^[[B" history-beginning-search-forward-end
 
+# history settings
+HISTFILE=~/.zsh_history              # Path to the history file
+HISTSIZE=100000                      # Number of commands to keep in memory
+SAVEHIST=100000                      # Number of commands to save to HISTFILE
+setopt appendhistory                 # Append new history to the file, don't overwrite
+setopt sharehistory                  # Share history between all sessions
+setopt incappendhistory              # Write to history file incrementally
+setopt histignoredups                # Ignore duplicate commands
+setopt histreduceblanks              # Remove unnecessary blank lines
+
 alias t=tmux
 alias g=git
 alias bazel=bazelisk
