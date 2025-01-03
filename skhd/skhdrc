@@ -179,8 +179,8 @@ cmd + shift - f : yabai -m window --toggle zoom-fullscreen
 
 # change window focus
 cmd - h : yabai -m window --focus west
-cmd - j : yabai -m window --focus north
-cmd - k : yabai -m window --focus south
+cmd - j : yabai -m window --focus south
+cmd - k : yabai -m window --focus north
 cmd - l : yabai -m window --focus east
 
 # move window
@@ -201,7 +201,6 @@ cmd + shift - n : yabai -m window --display next
 # Move window to previous screen
 cmd + shift - p : yabai -m window --display prev
 
-
 # restart yabai
 cmd + alt + shift - r : yabai --restart-service
 
@@ -213,3 +212,6 @@ cmd + shift - q : yabai -m window --quit
 
 # open terminal window
 cmd + shift - return : open -na "Terminal" && yabai -m window --focus recent
+
+# toggle floating mode
+cmd + shift - space : yabai -m window --toggle float
